@@ -58,6 +58,20 @@ vim.o.foldmethod = 'expr'      -- Usa expressão para dobrar
 vim.o.foldexpr = 'nvim_treesitter#foldexpr()' -- Expressão do Treesitter
 vim.o.foldenable = true        -- Habilita as dobras
 vim.o.foldlevel = 99           -- Define o nível inicial das dobras
+-- Change
+vim.api.nvim_set_keymap('v', 'c', '"_c', { noremap = true, silent = true })
+vim.api.nvim_set_keymap('v', 'C', '"_C', { noremap = true, silent = true })
+-- Navegation
+vim.api.nvim_set_keymap('i', '<A-h>', '<Left>', { noremap = true, silent = true })
+vim.api.nvim_set_keymap('i', '<A-l>', '<Right>', { noremap = true, silent = true })
+vim.api.nvim_set_keymap('i', '<A-j>', '<Down>', { noremap = true, silent = true })
+vim.api.nvim_set_keymap('i', '<A-k>', '<Up>', { noremap = true, silent = true })
+vim.api.nvim_set_keymap('i', '<A-b>', '<C-Left>', { noremap = true, silent = true })
+vim.api.nvim_set_keymap('i', '<A-w>', '<C-Right>', { noremap = true, silent = true })
+vim.api.nvim_set_keymap('i', '<A-L>', '<End>', { noremap = true, silent = true })
+vim.api.nvim_set_keymap('i', '<A-H>', '<Home>', { noremap = true, silent = true })
+vim.api.nvim_set_keymap('i', '<C-S>', '<Esc>:w<CR>a', { noremap = true, silent = true })
+
 -- ========================================================================== --
 -- ==                               COMMANDS                               == --
 -- ========================================================================== --
@@ -106,7 +120,6 @@ require('lazy').setup({
 		{'folke/tokyonight.nvim'}, -- theme
 		{'kyazdani42/nvim-web-devicons'}, -- icons
 		{'folke/which-key.nvim'},
-		{'nvim-lua/plenary.nvim', build = false},
 		{'nvim-treesitter/nvim-treesitter'},
 		{'nvim-treesitter/nvim-treesitter-textobjects'},
 		{'numToStr/Comment.nvim'},
@@ -130,6 +143,7 @@ require('lazy').setup({
 		},
 		{'saadparwaiz1/cmp_luasnip'}, -- snippt
 		{'lukas-reineke/indent-blankline.nvim', main = 'ibl', opts = {}},
+    {'vidocqh/auto-indent.nvim', opts = {}},
 		{
 			'nvim-neo-tree/neo-tree.nvim', branch = 'v3.x',
 			dependencies = {
@@ -201,6 +215,26 @@ require('lualine').setup({
       statusline = {'NvimTree'}
     }
   },
+  sections = {
+    lualine_a = {'mode'},
+    lualine_b = {'branch'},
+    lualine_c = {
+      { 'filename', path = 1 }, -- Mostra o caminho relativo ao projeto
+    },
+    lualine_x = {'encoding', 'fileformat', 'filetype'},
+    lualine_y = {'progress'},
+    lualine_z = {'location'}
+  }
+})
+--==========
+-- auto-indent 
+--==========
+require('auto-indent').setup({
+  lightmode = true,        -- Lightmode assumes tabstop and indentexpr not change within buffer's lifetime
+  ignore_filetype = {},    -- Disable plugin for specific filetypes, e.g. ignore_filetype = { 'javascript' }
+  indentexpr = function(lnum)
+    return require("nvim-treesitter.indent").get_indent(lnum)
+  end
 })
 --==========
 -- nvim-ts-autotag
@@ -488,7 +522,7 @@ require('window-picker').setup({
 	},
 })
 --==========
--- Windows Picker
+-- Toggleterm
 --==========
 require('toggleterm').setup({
 	open_mapping = [[<c-t>]],
