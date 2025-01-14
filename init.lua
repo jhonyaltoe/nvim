@@ -71,6 +71,7 @@ vim.api.nvim_set_keymap('i', '<A-w>', '<C-Right>', { noremap = true, silent = tr
 vim.api.nvim_set_keymap('i', '<A-L>', '<End>', { noremap = true, silent = true })
 vim.api.nvim_set_keymap('i', '<A-H>', '<Home>', { noremap = true, silent = true })
 vim.api.nvim_set_keymap('i', '<C-S>', '<Esc>:w<CR>a', { noremap = true, silent = true })
+vim.api.nvim_set_keymap('i', '<C-d>', '<Del>', { noremap = true, silent = true })
 
 -- ========================================================================== --
 -- ==                               COMMANDS                               == --
@@ -525,7 +526,7 @@ require('window-picker').setup({
 -- Toggleterm
 --==========
 require('toggleterm').setup({
-	open_mapping = [[<c-t>]],
+	open_mapping = [[<A-t>]],
 })
 vim.keymap.set({ 't', 'n' }, '<C-a>', [[<Cmd>ToggleTermToggleAll<CR>]])
 function _G.set_terminal_keymaps()
