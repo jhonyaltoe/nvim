@@ -470,10 +470,7 @@ require('lspconfig').tailwindcss.setup({
 require('ibl').setup({
   enabled = true,
   scope = {
-    enabled = false,
-  },
-  indent = {
-    char = '▏',
+    enabled = true,
   },
 })
 --==========
